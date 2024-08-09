@@ -10,7 +10,7 @@ const ElementsPanel = (props: ElementsFound) => {
   return (
     <div className="elementsPanel">
       {[...Array(props.elmnts.length)].map((e, i) => (
-        <Element name={props.elmnts[i]}></Element>
+        <Element key={i} name={props.elmnts[i]}></Element>
       ))}
     </div>
   );

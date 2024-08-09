@@ -1,0 +1,65 @@
+  .elementCard {
+    position: relative;
+    width: 8.5vw;
+    height: 5vh;
+    background: #530155;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: start;
+    gap: .75vw;
+    padding: 0 .5vw 0 .5vw;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  .elementCard-icon {
+    display: flex;
+    width: 2vw;
+    height: 4vh;
+    border-radius: 0;
+    flex-shrink: 0;
+  }
+
+  .elementCard-name {
+    width: 4.5vw;
+    height: 2vh;
+    flex-shrink: 0;
+  }
+  .elementCard-name .root-0 {
+    display: flex;
+    white-space: break-spaces;
+    align-items: center;
+  }
+  .elementCard-name .root-0-paragraph-set-0 {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: inherit;
+    margin-right: 0;
+    vertical-align: top;
+  }
+  .elementCard-name .root-0-paragraph-set-0-paragraph-0 {
+    font-size: 0;
+    line-height: 1.2;
+    margin: 0;
+    text-align: justify;
+  }
+  .elementCard-name .root-0-paragraph-set-0-paragraph-0-text-0 {
+    color: rgba(0, 0, 0, 1);
+    text-transform: uppercase;
+    line-break: auto;
+    overflow-wrap: initial;
+    white-space: pre;
+    text-rendering: geometricPrecision;
+    caret-color: rgba(0, 0, 0, 1);
+    text-decoration: none;
+    letter-spacing: 0;
+    font-size: 1.5rem;
+    font-family: "sourcesanspro";
+    font-style: normal;
+    font-weight: 500;
+  }
+  
