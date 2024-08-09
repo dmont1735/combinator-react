@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import placeholderIcon from "../../../src/assets/Placeholder.png";
 import "./elementCard.css";
 
@@ -7,15 +7,36 @@ const extension = ".png";
 
 interface ElementCardProperties {
   name: string;
-  position: {x: number,y: number};
+  position: { x: number; y: number };
 }
 
 const elementCard = (props: ElementCardProperties) => {
-let imgSrc:string = path + props.name + extension;
-imgSrc = placeholderIcon;
+  let imgSrc: string = path + props.name + extension;
+  imgSrc = placeholderIcon;
+
+  const [isMounted, setIsMounted] = useState(true);
+
+  const handleMouseDown = (event: React.MouseEvent) => {
+    if (event.button === 1) {
+      // 1 is the middle mouse button
+      setIsMounted(false);
+    }
+  };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
-    <div className="elementCard" style={{position: "absolute", left:props.position.x,top:props.position.y}}>
+    <div
+      onMouseDown={handleMouseDown}
+      className="elementCard"
+      style={{
+        position: "absolute",
+        left: props.position.x,
+        top: props.position.y,
+      }}
+    >
       <div className="elementCard-icon">
         <img src={imgSrc}></img>
       </div>
