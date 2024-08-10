@@ -7,14 +7,15 @@ const extension = ".png";
 
 interface ElementProps {
   name: string;
+  onAddCard: (name: string) => void;
 }
 
-const Element: React.FC<ElementProps> = ({name}) => {
-let imgSrc:string = path + name + extension;
-imgSrc = placeholderIcon;
+const Element: React.FC<ElementProps> = ({ name, onAddCard }) => {
+  let imgSrc: string = path + name + extension;
+  imgSrc = placeholderIcon;
 
   return (
-    <button className="element">
+    <button onClick={() => onAddCard(name)} className="element">
       <div className="element-icon">
         <img src={imgSrc}></img>
       </div>

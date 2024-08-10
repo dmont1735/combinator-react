@@ -4,13 +4,14 @@ import "./panel.css";
 
 interface PanelProps {
   elements: string[];
+  onAddCard: (name: string) => void;
 }
 
-const Panel: React.FC<PanelProps> = ({ elements }) => {
+const Panel: React.FC<PanelProps> = ({ elements, onAddCard }) => {
   return (
     <div className="panel">
       {[...Array(elements.length)].map((element, index) => (
-        <Element key={index} name={elements[index]}></Element>
+        <Element key={index} name={elements[index]} onAddCard={onAddCard} />
       ))}
     </div>
   );

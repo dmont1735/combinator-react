@@ -5,7 +5,7 @@ import "./card.css";
 const path = "../../../src/assets/";
 const extension = ".png";
 
-interface CardProps {
+export interface CardProps {
   name: string;
   position: { x: number; y: number };
 }
