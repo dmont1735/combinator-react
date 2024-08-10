@@ -5,16 +5,16 @@ import "./element.css";
 const path = "../../../src/assets/";
 const extension = ".png";
 
-interface ElementProperties {
+interface ElementProps {
   name: string;
 }
 
-const element = (props: ElementProperties) => {
-let imgSrc:string = path + props.name + extension;
+const Element: React.FC<ElementProps> = ({name}) => {
+let imgSrc:string = path + name + extension;
 imgSrc = placeholderIcon;
 
   return (
-    <div className="element">
+    <button className="element">
       <div className="element-icon">
         <img src={imgSrc}></img>
       </div>
@@ -24,15 +24,15 @@ imgSrc = placeholderIcon;
             <div className="paragraph-set root-0-paragraph-set-0">
               <p className="paragraph root-0-paragraph-set-0-paragraph-0">
                 <span className="text-node root-0-paragraph-set-0-paragraph-0-text-0">
-                  {props.name}
+                  {name}
                 </span>
               </p>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
-export default element;
+export default Element;

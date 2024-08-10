@@ -1,4 +1,4 @@
-  .elementCard {
+  .card {
     position: relative;
     width: 8.5vw;
     height: 5vh;
@@ -16,7 +16,7 @@
     align-self: center;
   }
 
-  .elementCard-icon {
+  .card-icon {
     display: flex;
     width: 2vw;
     height: 4vh;
@@ -24,30 +24,30 @@
     flex-shrink: 0;
   }
 
-  .elementCard-name {
+  .card-name {
     width: 4.5vw;
     height: 2vh;
     flex-shrink: 0;
   }
-  .elementCard-name .root-0 {
+  .card-name .root-0 {
     display: flex;
     white-space: break-spaces;
     align-items: center;
   }
-  .elementCard-name .root-0-paragraph-set-0 {
+  .card-name .root-0-paragraph-set-0 {
     display: inline-flex;
     flex-direction: column;
     justify-content: inherit;
     margin-right: 0;
     vertical-align: top;
   }
-  .elementCard-name .root-0-paragraph-set-0-paragraph-0 {
+  .card-name .root-0-paragraph-set-0-paragraph-0 {
     font-size: 0;
     line-height: 1.2;
     margin: 0;
     text-align: justify;
   }
-  .elementCard-name .root-0-paragraph-set-0-paragraph-0-text-0 {
+  .card-name .root-0-paragraph-set-0-paragraph-0-text-0 {
     color: rgba(0, 0, 0, 1);
     text-transform: uppercase;
     line-break: auto;

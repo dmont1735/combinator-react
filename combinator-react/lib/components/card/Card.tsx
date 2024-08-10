@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import placeholderIcon from "../../../src/assets/Placeholder.png";
-import "./elementCard.css";
+import "./card.css";
 
 const path = "../../../src/assets/";
 const extension = ".png";
 
-interface ElementCardProperties {
+interface CardProps {
   name: string;
   position: { x: number; y: number };
 }
 
-const elementCard = (props: ElementCardProperties) => {
-  let imgSrc: string = path + props.name + extension;
+const Card: React.FC<CardProps> = ({ name, position }) => {
+  let imgSrc: string = path + name + extension;
   imgSrc = placeholderIcon;
 
   const [isMounted, setIsMounted] = useState(true);
@@ -30,23 +30,23 @@ const elementCard = (props: ElementCardProperties) => {
   return (
     <div
       onMouseDown={handleMouseDown}
-      className="elementCard"
+      className="card"
       style={{
         position: "absolute",
-        left: props.position.x,
-        top: props.position.y,
+        left: position.x,
+        top: position.y,
       }}
     >
-      <div className="elementCard-icon">
+      <div className="card-icon">
         <img src={imgSrc}></img>
       </div>
-      <div className="shape text elementCard-name">
+      <div className="shape text card-name">
         <div className="text-node-html">
           <div className="root rich-text root-0">
             <div className="paragraph-set root-0-paragraph-set-0">
               <p className="paragraph root-0-paragraph-set-0-paragraph-0">
                 <span className="text-node root-0-paragraph-set-0-paragraph-0-text-0">
-                  {props.name}
+                  {name}
                 </span>
               </p>
             </div>
@@ -57,4 +57,4 @@ const elementCard = (props: ElementCardProperties) => {
   );
 };
 
-export default elementCard;
+export default Card;
