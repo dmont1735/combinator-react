@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import placeholderIcon from "../../../src/assets/Placeholder.png";
 import "./card.css";
 
@@ -11,17 +11,60 @@ export interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ name, position }) => {
+  const [isMounted, setIsMounted] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
+  const [currentPosition, setCurrentPosition] = useState(position);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+
   let imgSrc: string = path + name + extension;
   imgSrc = placeholderIcon;
 
-  const [isMounted, setIsMounted] = useState(true);
-
   const handleMouseDown = (event: React.MouseEvent) => {
-    if (event.button === 1) {
-      // 1 is the middle mouse button
-      setIsMounted(false);
+    switch (event.button) {
+      case 0:
+        setIsDragging(true);
+        setDragOffset({
+          x: event.clientX - currentPosition.x,
+          y: event.clientY - currentPosition.y,
+        });
+        break;
+
+      case 1:
+        setIsMounted(false);
+        break;
+
+      default:
+        break;
     }
   };
+
+  const handleMouseMove = (event: MouseEvent) => {
+    if (isDragging) {
+      setCurrentPosition({
+        x: event.clientX - dragOffset.x,
+        y: event.clientY - dragOffset.y,
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+    } else {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    }
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging]);
 
   if (!isMounted) {
     return null;
@@ -33,26 +76,15 @@ const Card: React.FC<CardProps> = ({ name, position }) => {
       className="card"
       style={{
         position: "absolute",
-        left: position.x,
-        top: position.y,
+        left: currentPosition.x,
+        top: currentPosition.y,
+        cursor: isDragging ? "grabbing" : "grab",
       }}
     >
       <div className="card-icon">
         <img src={imgSrc}></img>
       </div>
-      <div className="shape text card-name">
-        <div className="text-node-html">
-          <div className="root rich-text root-0">
-            <div className="paragraph-set root-0-paragraph-set-0">
-              <p className="paragraph root-0-paragraph-set-0-paragraph-0">
-                <span className="text-node root-0-paragraph-set-0-paragraph-0-text-0">
-                  {name}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div className="card-name">{name}</div>
     </div>
   );
 };
