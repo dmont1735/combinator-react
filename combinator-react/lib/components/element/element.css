@@ -22,6 +22,7 @@
     height: 4vh;
     border-radius: 0;
     flex-shrink: 0;
+    user-select: none;
   }
 
   .element-name {
@@ -40,5 +41,6 @@
     font-family: "sourcesanspro";
     font-style: normal;
     font-weight: 500;
+    user-select: none;
   }
   
