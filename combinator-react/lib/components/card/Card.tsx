@@ -8,12 +8,12 @@ const extension = ".png";
 export interface CardProps {
   name: string;
   position: { x: number; y: number };
+  setPosition?: (newPosition: { x: number, y: number}) => void;
 }
 
-const Card: React.FC<CardProps> = ({ name, position }) => {
+const Card: React.FC<CardProps> = ({ name, position, setPosition }) => {
   const [isMounted, setIsMounted] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
-  const [currentPosition, setCurrentPosition] = useState(position);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
   let imgSrc: string = path + name + extension;
@@ -24,8 +24,8 @@ const Card: React.FC<CardProps> = ({ name, position }) => {
       case 0:
         setIsDragging(true);
         setDragOffset({
-          x: event.clientX - currentPosition.x,
-          y: event.clientY - currentPosition.y,
+          x: event.clientX - position.x,
+          y: event.clientY - position.y,
         });
         break;
 
@@ -39,8 +39,8 @@ const Card: React.FC<CardProps> = ({ name, position }) => {
   };
 
   const handleMouseMove = (event: MouseEvent) => {
-    if (isDragging) {
-      setCurrentPosition({
+    if (isDragging && setPosition) {
+      setPosition({
         x: event.clientX - dragOffset.x,
         y: event.clientY - dragOffset.y,
       });
@@ -76,8 +76,8 @@ const Card: React.FC<CardProps> = ({ name, position }) => {
       className="card"
       style={{
         position: "absolute",
-        left: currentPosition.x,
-        top: currentPosition.y,
+        left: position.x,
+        top: position.y,
         cursor: isDragging ? "grabbing" : "grab",
       }}
     >

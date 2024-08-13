@@ -37,7 +37,7 @@ const App: React.FC = () => {
   return (
     <div className="canvas">
       <Panel elements={["Water", "Fire"]} onAddCard={addCard}></Panel>
-      <Board cards={cards}></Board>
+      <Board initialCards={cards}></Board>
     </div>
   );
 };
