@@ -11,6 +11,10 @@ export interface CardProps {
   setPosition?: (newPosition: { x: number, y: number}) => void;
 }
 
+const removeDefaultMouseBehavior = (event: React.MouseEvent) =>{
+  event.preventDefault();
+}
+
 const Card: React.FC<CardProps> = ({ name, position, setPosition }) => {
   const [isMounted, setIsMounted] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
@@ -81,10 +85,10 @@ const Card: React.FC<CardProps> = ({ name, position, setPosition }) => {
         cursor: isDragging ? "grabbing" : "grab",
       }}
     >
-      <div className="card-icon">
+      <div className="card-icon" onMouseDown={removeDefaultMouseBehavior}>
         <img src={imgSrc}></img>
       </div>
-      <div className="card-name">{name}</div>
+      <div className="card-name" onMouseDown={removeDefaultMouseBehavior}>{name}</div>
     </div>
   );
 };
