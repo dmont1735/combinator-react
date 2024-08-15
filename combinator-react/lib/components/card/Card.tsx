@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
-import placeholderIcon from "../../../src/assets/Placeholder.png";
+import placeholderIcon from "../../assets/Placeholder.png";
+import { CardType } from "../../../src/context/CardContext";
 import "./card.css";
 
 const path = "../../../src/assets/";
 const extension = ".png";
 
 export interface CardProps {
-  name: string;
-  position: { x: number; y: number };
-  setPosition?: (newPosition: { x: number, y: number}) => void;
+  card:CardType,
+  setPosition: (newPosition: { x: number; y: number }) => void;
+  removeCard: (card:CardType) => void;
 }
 
-const Card: React.FC<CardProps> = ({ name, position, setPosition }) => {
-  const [isMounted, setIsMounted] = useState(true);
+const Card: React.FC<CardProps> = ({
+  card,
+  setPosition,
+  removeCard,
+}) => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
@@ -20,19 +24,19 @@ const Card: React.FC<CardProps> = ({ name, position, setPosition }) => {
   imgSrc = placeholderIcon;
 
   const handleMouseDown = (event: React.MouseEvent) => {
-  event.preventDefault();
+    event.preventDefault();
 
     switch (event.button) {
       case 0:
         setIsDragging(true);
         setDragOffset({
-          x: event.clientX - position.x,
-          y: event.clientY - position.y,
+          x: event.clientX - card.position.x,
+          y: event.clientY - card.position.y,
         });
         break;
 
       case 1:
-        setIsMounted(false);
+        removeCard(card);
         break;
 
       default:
@@ -41,7 +45,7 @@ const Card: React.FC<CardProps> = ({ name, position, setPosition }) => {
   };
 
   const handleMouseMove = (event: MouseEvent) => {
-    if (isDragging && setPosition) {
+    if (isDragging) {
       setPosition({
         x: event.clientX - dragOffset.x,
         y: event.clientY - dragOffset.y,
@@ -68,25 +72,21 @@ const Card: React.FC<CardProps> = ({ name, position, setPosition }) => {
     };
   }, [isDragging]);
 
-  if (!isMounted) {
-    return null;
-  }
-
   return (
     <div
       onMouseDown={handleMouseDown}
       className="card"
       style={{
         position: "absolute",
-        left: position.x,
-        top: position.y,
+        left: card.position.x,
+        top: card.position.y,
         cursor: isDragging ? "grabbing" : "grab",
       }}
     >
       <div className="card-icon">
         <img src={imgSrc}></img>
       </div>
-      <div className="card-name">{name}</div>
+      <div className="card-name">{card.name}</div>
     </div>
   );
 };

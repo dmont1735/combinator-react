@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
-import Card, { CardProps } from "../../components/card/Card";
+import { useContext } from "react";
+import { CardContext } from "../../../src/context/CardContext";
+import Card from "../../components/card/Card";
 
-interface BoardProps {
-  initialCards: CardProps[];
-}
+const Board = () => {
+  const context = useContext(CardContext);
 
-const Board: React.FC<BoardProps> = ({ initialCards }) => {
-  const [cards, setCards] = useState<CardProps[]>(initialCards);
+  if (!context) {
+    throw new Error('Board must be used within a CardContext');
+  }
+  
+  const { cards, setCards, removeCard } = context;
 
   const handleSetPosition = (
     index: number,
@@ -19,20 +22,15 @@ const Board: React.FC<BoardProps> = ({ initialCards }) => {
     });
   };
 
-  useEffect(() => {
-    setCards(initialCards);
-  }, [initialCards]);
-
   return (
     <div className="board">
       {cards.map((card, index) => (
         <Card
-          key={index}
-          name={card.name}
-          position={card.position}
+          card={card}
           setPosition={(newPosition: { x: number; y: number }) => {
             handleSetPosition(index, newPosition);
           }}
+          removeCard={removeCard}
         />
       ))}
     </div>

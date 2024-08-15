@@ -1,28 +1,15 @@
 import "./App.css";
 import Panel from "../lib/containers/panel/Panel";
 import Board from "../lib/containers/board/Board";
-import { CardProps } from "../lib/components/card/Card";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import CardProvider from "./context/CardContext";
 
 const App: React.FC = () => {
-  const [cards, setCards] = useState<CardProps[]>([]);
-
-  const addCard = (name: string) => {
-    const newCard: CardProps = {
-      name,
-      position: {
-        x: Math.random() * 1920, // Random x position
-        y: Math.random() * 1080, // Random y position
-      },
-    };
-
-    setCards((cards) => [...cards, newCard]);
-  };
+  const initialElements: string[] = ["Water", "Fire"];
 
   useEffect(() => {
     const handleMouseDown = (event: MouseEvent) => {
       if (event.button === 1) {
-        // Middle mouse button
         event.preventDefault();
       }
     };
@@ -36,8 +23,10 @@ const App: React.FC = () => {
 
   return (
     <div className="canvas">
-      <Panel elements={["Water", "Fire"]} onAddCard={addCard}></Panel>
-      <Board initialCards={cards}></Board>
+      <CardProvider>
+        <Panel elements={initialElements}></Panel>
+        <Board></Board>
+      </CardProvider>
     </div>
   );
 };
