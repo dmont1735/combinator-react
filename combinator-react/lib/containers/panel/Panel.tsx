@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import Element from "../../components/element/Element";
 import "./panel.css";
 import { CardContext } from "../../../src/context/CardContext";
@@ -9,7 +9,9 @@ const Panel = () => {
   const elementContext = useContext(ElementContext);
 
   if (!cardContext || !elementContext) {
-    throw new Error("Panel must be used within both a CardContext and a ElementContext");
+    throw new Error(
+      "Panel must be used within both a CardContext and a ElementContext"
+    );
   }
 
   return (

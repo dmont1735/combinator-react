@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
 import placeholderIcon from "../../assets/Placeholder.png";
-import { CardType } from "../../../src/context/CardContext";
+import { CardType } from "../../../src/@types/Types";
 import "./card.css";
 
 const path = "../../../src/assets/";
 const extension = ".png";
 
 export interface CardProps {
-  card:CardType,
+  card: CardType;
   setPosition: (newPosition: { x: number; y: number }) => void;
-  removeCard: (card:CardType) => void;
+  checkCombination: () => void;
+  removeCard: (card: CardType) => void;
 }
 
 const Card: React.FC<CardProps> = ({
   card,
   setPosition,
+  checkCombination,
   removeCard,
 }) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -55,6 +57,7 @@ const Card: React.FC<CardProps> = ({
 
   const handleMouseUp = () => {
     setIsDragging(false);
+    checkCombination();
   };
 
   useEffect(() => {
