@@ -1,21 +1,21 @@
 import { useContext } from "react";
 import { CardContext } from "../../../src/context/CardContext";
+import { ElementContext } from "../../../src/context/ElementContext";
 import Card from "../../components/card/Card";
 
 const Board = () => {
-  const context = useContext(CardContext);
+  const cardContext = useContext(CardContext);
+  const elementContext = useContext(ElementContext);
 
-  if (!context) {
-    throw new Error('Board must be used within a CardContext');
+  if (!cardContext || !elementContext) {
+    throw new Error("Board must be used within both a CardContext and a ElementContext");
   }
-  
-  const { cards, setCards, removeCard } = context;
 
   const handleSetPosition = (
     index: number,
     newPosition: { x: number; y: number }
   ) => {
-    setCards((previousCards) => {
+    cardContext.setCards((previousCards) => {
       let updatedCards = [...previousCards];
       updatedCards[index].position = newPosition;
       return updatedCards;
@@ -24,13 +24,13 @@ const Board = () => {
 
   return (
     <div className="board">
-      {cards.map((card, index) => (
+      {cardContext.cards.map((card, index) => (
         <Card
           card={card}
           setPosition={(newPosition: { x: number; y: number }) => {
             handleSetPosition(index, newPosition);
           }}
-          removeCard={removeCard}
+          removeCard={cardContext.removeCard}
         />
       ))}
     </div>

@@ -1,23 +1,24 @@
 import React, { useContext } from "react";
 import Element from "../../components/element/Element";
 import "./panel.css";
-import {CardContext} from "../../../src/context/CardContext";
+import { CardContext } from "../../../src/context/CardContext";
+import { ElementContext } from "../../../src/context/ElementContext";
 
-interface PanelProps {
-  elements: string[];
-}
+const Panel = () => {
+  const cardContext = useContext(CardContext);
+  const elementContext = useContext(ElementContext);
 
-const Panel: React.FC<PanelProps> = ({ elements }) => {
-  const context = useContext(CardContext);
-
-  if (!context) {
-    throw new Error('Board must be used within a CardContext');
+  if (!cardContext || !elementContext) {
+    throw new Error("Panel must be used within both a CardContext and a ElementContext");
   }
- 
+
   return (
     <div className="panel">
-      {[...Array(elements.length)].map((element, index) => (
-        <Element key={index} name={elements[index]} onAddCard={context.addCard} />
+      {elementContext.elementsFound.map((elementFound) => (
+        <Element
+          name={elementFound.name}
+          onAddCard={cardContext.addCard}
+        ></Element>
       ))}
     </div>
   );

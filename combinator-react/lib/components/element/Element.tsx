@@ -1,5 +1,5 @@
 import React from "react";
-import placeholderIcon from "../../../src/assets/Placeholder.png";
+import placeholderIcon from "../../assets/Placeholder.png";
 import "./element.css";
 
 const path = "../../../src/assets/";

@@ -3,10 +3,9 @@ import Panel from "../lib/containers/panel/Panel";
 import Board from "../lib/containers/board/Board";
 import { useEffect } from "react";
 import CardProvider from "./context/CardContext";
+import ElementProvider from "./context/ElementContext";
 
 const App: React.FC = () => {
-  const initialElements: string[] = ["Water", "Fire"];
-
   useEffect(() => {
     const handleMouseDown = (event: MouseEvent) => {
       if (event.button === 1) {
@@ -23,10 +22,12 @@ const App: React.FC = () => {
 
   return (
     <div className="canvas">
-      <CardProvider>
-        <Panel elements={initialElements}></Panel>
-        <Board></Board>
-      </CardProvider>
+      <ElementProvider>
+        <CardProvider>
+          <Panel />
+          <Board />
+        </CardProvider>
+      </ElementProvider>
     </div>
   );
 };
