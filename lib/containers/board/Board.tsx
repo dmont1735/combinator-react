@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CardContext } from "../../../src/context/CardContext";
 import { ElementContext } from "../../../src/context/ElementContext";
 import Card from "../../components/card/Card";
@@ -28,7 +28,7 @@ const Board = () => {
 
   const handleCheckCombination = (cardA: CardType) => {
     cardContext.cards.forEach((card) => {
-      if (areCardsColliding(cardA, card) && cardA !== card) {
+      if (areCardsColliding(cardA, card)) {
         let newElement = elementContext.combine(cardA, card);
 
         if (newElement !== null) {

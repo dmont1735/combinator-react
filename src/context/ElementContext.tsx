@@ -3,15 +3,19 @@ import {
   ReactNode,
   SetStateAction,
   createContext,
+  useEffect,
   useState,
 } from "react";
 import { CardType, Combination, ElementType } from "../@types/Types";
+import {
+  loadFromLocalStorage,
+  populateStorage,
+  saveToLocalStorage,
+} from "../utils";
 
 export interface ElementContextInterface {
   elements: ElementType[];
-  elementsFound: ElementType[];
   setElements: Dispatch<SetStateAction<ElementType[]>>;
-  setElementsFound: Dispatch<SetStateAction<ElementType[]>>;
   combinations: Combination[];
   combine: (cardA: CardType, cardB: CardType) => ElementType | null;
 }
@@ -25,19 +29,17 @@ type ElementProviderProps = {
 };
 
 export default function ElementProvider({ children }: ElementProviderProps) {
-  const [elements, setElements] = useState<ElementType[]>([]);
-  const [elementsFound, setElementsFound] = useState<ElementType[]>([
-    { name: "Water" },
-    { name: "Fire" },
-  ]);
+  useEffect(() => {
+    populateStorage();
+    return () => {};
+  }, [{}]);
 
-  const combinations: Combination[] = [
-    {
-      parentA: { name: "Water", rank: 0 },
-      parentB: { name: "Fire", rank: 0 },
-      child: { name: "Smoke", rank: 1 },
-    },
-  ];
+  const [elements, setElements] = useState<ElementType[]>(
+    loadFromLocalStorage("elements") as ElementType[]
+  );
+  const [combinations, setCombinations] = useState<Combination[]>(
+    loadFromLocalStorage("combinations") as Combination[]
+  );
 
   const combine = (cardA: CardType, cardB: CardType) => {
     let combinationResult = combinations.find(
@@ -47,8 +49,12 @@ export default function ElementProvider({ children }: ElementProviderProps) {
     );
     if (combinationResult !== undefined) {
       let newElement = combinationResult.child;
-      if (!elementsFound.some(({ name }) => name === newElement.name)) {
-        setElementsFound([...elementsFound, newElement]);
+      if (!elements.some(({ name }) => name === newElement.name)) {
+        setElements(() => {
+          let elmts = [...elements, newElement];
+          saveToLocalStorage("elements", elmts);
+          return elmts;
+        });
       }
       return combinationResult.child;
     } else {
@@ -60,9 +66,7 @@ export default function ElementProvider({ children }: ElementProviderProps) {
     <ElementContext.Provider
       value={{
         elements,
-        elementsFound,
         setElements,
-        setElementsFound,
         combinations,
         combine,
       }}

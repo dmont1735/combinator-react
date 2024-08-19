@@ -16,9 +16,9 @@ const Panel = () => {
 
   return (
     <div className="panel">
-      {elementContext.elementsFound.map((elementFound) => (
+      {elementContext.elements.map((element) => (
         <Element
-          name={elementFound.name}
+          name={element.name}
           onAddCard={cardContext.addCard}
         ></Element>
       ))}
