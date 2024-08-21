@@ -3,12 +3,10 @@ import {
   ReactNode,
   SetStateAction,
   createContext,
-  useEffect,
   useState,
 } from "react";
 import { CardType, Combination, ElementType } from "../@types/Types";
 import {
-  initialElements,
   loadFromLocalStorage,
   populateStorage,
   saveToLocalStorage,
@@ -31,10 +29,7 @@ type ElementProviderProps = {
 };
 
 export default function ElementProvider({ children }: ElementProviderProps) {
-  useEffect(() => {
-    populateStorage();
-    return () => {};
-  }, [{}]);
+  populateStorage();
 
   const [elements, setElements] = useState<ElementType[]>(
     loadFromLocalStorage("elements") as ElementType[]
@@ -64,10 +59,10 @@ export default function ElementProvider({ children }: ElementProviderProps) {
     }
   };
 
-  const resetData=()=>{
+  const resetData = () => {
     populateStorage(true);
-    setElements(initialElements);
-  }
+    setElements(loadFromLocalStorage("elements") as ElementType[]);
+  };
 
   return (
     <ElementContext.Provider

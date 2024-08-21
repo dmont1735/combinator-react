@@ -10,7 +10,7 @@ import { CardType } from "../@types/Types";
 export interface CardContextInterface {
   cards: CardType[];
   setCards: Dispatch<SetStateAction<CardType[]>>;
-  addCard: (name: string, position?: {x:number, y:number}) => void;
+  addCard: (name: string, position?: { x: number; y: number }) => void;
   removeCard: (card: CardType) => void;
 }
 
@@ -30,7 +30,7 @@ const getRandomPosition = () => {
 export default function CardProvider({ children }: CardProviderProps) {
   const [cards, setCards] = useState<CardType[]>([]);
 
-  const addCard = (name: string, position?: {x:number, y:number}) => {
+  const addCard = (name: string, position?: { x: number; y: number }) => {
     const newCard: CardType = {
       name: name,
       position: position !== undefined ? position : getRandomPosition(),
