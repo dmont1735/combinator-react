@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { CardContext } from "../../../src/context/CardContext";
 import { ElementContext } from "../../../src/context/ElementContext";
 import Card from "../../components/card/Card";
@@ -40,8 +40,22 @@ const Board = () => {
     });
   };
 
+  const onHandleResetData = () => {
+    elementContext.resetData();
+    cardContext.cards.map((card) => {
+      cardContext.removeCard(card);
+    });
+  };
+
   return (
     <div className="board">
+      <button
+        onClick={() => {
+          onHandleResetData();
+        }}
+      >
+        RESET DATA
+      </button>
       {cardContext.cards.map((card, index) => (
         <Card
           card={card}

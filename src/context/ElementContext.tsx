@@ -8,6 +8,7 @@ import {
 } from "react";
 import { CardType, Combination, ElementType } from "../@types/Types";
 import {
+  initialElements,
   loadFromLocalStorage,
   populateStorage,
   saveToLocalStorage,
@@ -18,6 +19,7 @@ export interface ElementContextInterface {
   setElements: Dispatch<SetStateAction<ElementType[]>>;
   combinations: Combination[];
   combine: (cardA: CardType, cardB: CardType) => ElementType | null;
+  resetData: () => void;
 }
 
 export const ElementContext = createContext<ElementContextInterface | null>(
@@ -37,7 +39,7 @@ export default function ElementProvider({ children }: ElementProviderProps) {
   const [elements, setElements] = useState<ElementType[]>(
     loadFromLocalStorage("elements") as ElementType[]
   );
-  const [combinations, setCombinations] = useState<Combination[]>(
+  const [combinations] = useState<Combination[]>(
     loadFromLocalStorage("combinations") as Combination[]
   );
 
@@ -62,6 +64,11 @@ export default function ElementProvider({ children }: ElementProviderProps) {
     }
   };
 
+  const resetData=()=>{
+    populateStorage(true);
+    setElements(initialElements);
+  }
+
   return (
     <ElementContext.Provider
       value={{
@@ -69,6 +76,7 @@ export default function ElementProvider({ children }: ElementProviderProps) {
         setElements,
         combinations,
         combine,
+        resetData,
       }}
     >
       {children}

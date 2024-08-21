@@ -1,5 +1,19 @@
 import { CardType, Combination, ElementType } from "./@types/Types";
 
+export const initialElements: ElementType[] = [
+  { name: "Water", rank: 0 },
+  { name: "Fire", rank: 0 },
+];
+
+export const initialCombinations: Combination[] = [
+  {
+    parentA: { name: "Water", rank: 0 },
+    parentB: { name: "Fire", rank: 0 },
+    child: { name: "Smoke", rank: 1 },
+  },
+];
+
+
 export const vwToPx = (vw: number): number => {
   return (vw / 100) * window.innerWidth;
 };
@@ -58,31 +72,13 @@ export const loadFromLocalStorage = <T>(key: string): T | null => {
   }
 };
 
-export function populateStorage() {
-  if (!localStorage.getItem("elements")) {
-    let initialElements: ElementType[] = [
-      { name: "Water", rank: 0 },
-      { name: "Fire", rank: 0 },
-    ];
+export function populateStorage(reset?:boolean) {
+  if (!localStorage.getItem("elements") || reset) {
     saveToLocalStorage("elements", initialElements);
   }
 
   if (!localStorage.getItem("combinations")) {
-    let initialCombinations: Combination[] = [
-      {
-        parentA: { name: "Water", rank: 0 },
-        parentB: { name: "Fire", rank: 0 },
-        child: { name: "Smoke", rank: 1 },
-      },
-    ];
     saveToLocalStorage("combinations", initialCombinations);
   }
 }
 
-export const removeFromLocalStorage = (key: string): void => {
-  try {
-    localStorage.removeItem(key);
-  } catch (error) {
-    console.error("Error removing from localStorage", error);
-  }
-};
