@@ -1,0 +1,12 @@
+[
+  {"parentA": {"name": "Water","rank": 0},"parentB": {"name": "Fire", "rank": 0}, "child": {"name": "Steam", "rank": 1}},
+  {"parentA": {"name": "Water","rank": 0},"parentB": {"name": "Earth", "rank": 0}, "child": {"name": "Life", "rank": 1}},
+  {"parentA": {"name": "Water","rank": 0},"parentB": {"name": "Air", "rank": 0}, "child": {"name": "Cloud", "rank": 1}},
+  {"parentA": {"name": "Water","rank": 0},"parentB": {"name": "Water", "rank": 0}, "child": {"name": "Lake", "rank": 1}},
+  {"parentA": {"name": "Fire","rank": 0},"parentB": {"name": "Earth", "rank": 0}, "child": {"name": "Lava", "rank": 1}},
+  {"parentA": {"name": "Lava","rank": 0},"parentB": {"name": "Water", "rank": 0}, "child": {"name": "Stone", "rank": 1}},
+  {"parentA": {"name": "Stone","rank": 1},"parentB": {"name": "Stone", "rank": 1}, "child": {"name": "Rock", "rank": 2}},
+  {"parentA": {"name": "Earth","rank": 0},"parentB": {"name": "Earth", "rank": 0}, "child": {"name": "Dirt", "rank": 1}},
+  {"parentA": {"name": "Cloud","rank": 1},"parentB": {"name": "Water", "rank": 0}, "child": {"name": "Rain", "rank": 2}},
+  {"parentA": {"name": "Cloud","rank": 1},"parentB": {"name": "Cloud", "rank": 1}, "child": {"name": "Lightning", "rank": 2}}
+]

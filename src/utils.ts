@@ -1,32 +1,21 @@
-import { CardType, Combination, ElementType } from "./@types/Types";
+import { CardType } from "./@types/Types";
+import initialCombinations from "../lib/data/combinations.json";
+import initialElements from "../lib/data/elements.json";
 
-const initialElements: ElementType[] = [
-  { name: "Water", rank: 0 },
-  { name: "Fire", rank: 0 },
-];
-
-const initialCombinations: Combination[] = [
-  {
-    parentA: { name: "Water", rank: 0 },
-    parentB: { name: "Fire", rank: 0 },
-    child: { name: "Smoke", rank: 1 },
-  },
-];
-
-export const vwToPx = (vw: number): number => {
+const vwToPx = (vw: number): number => {
   return (vw / 100) * window.innerWidth;
 };
 
-export const vhToPx = (vh: number): number => {
+const vhToPx = (vh: number): number => {
   return (vh / 100) * window.innerHeight;
 };
 
-export const cardsSize: { width: number; height: number } = {
+const cardsSize: { width: number; height: number } = {
   width: vwToPx(4.2),
   height: vhToPx(2),
 };
 
-export const isColliding = (
+const isColliding = (
   posA: { x: number; y: number },
   posB: { x: number; y: number },
   offset: { x: number; y: number }
