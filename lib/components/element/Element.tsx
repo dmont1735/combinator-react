@@ -1,21 +1,17 @@
 import React from "react";
-import placeholderIcon from "../../assets/Placeholder.png";
 import "./element.css";
-
-const path = "../../../src/assets/";
-const extension = ".png";
 
 interface ElementProps {
   name: string;
-  onAddCard: (name: string) => void;
+  rank:number;
+  onAddCard: (name: string, rank:number) => void;
 }
 
-const Element: React.FC<ElementProps> = ({ name, onAddCard }) => {
-  let imgSrc: string = path + name + extension;
-  imgSrc = placeholderIcon;
+const Element: React.FC<ElementProps> = ({ name, rank, onAddCard }) => {
+  const imgSrc = new URL(`../../assets/${name}Badge.svg`, import.meta.url).href;
 
   return (
-    <button onClick={() => onAddCard(name)} className="element">
+    <button onClick={() => onAddCard(name, rank)} className="element">
       <div className="element-icon">
         <img src={imgSrc}></img>
       </div>

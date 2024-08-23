@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import placeholderIcon from "../../assets/Placeholder.png";
 import { CardType } from "../../../src/@types/Types";
 import "./card.css";
-
-const path = "../../../src/assets/";
-const extension = ".png";
 
 export interface CardProps {
   card: CardType;
@@ -22,8 +18,8 @@ const Card: React.FC<CardProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
-  let imgSrc: string = path + name + extension;
-  imgSrc = placeholderIcon;
+  const imgSrc = new URL(`../../assets/${card.name}Badge.svg`, import.meta.url).href;
+  console.log(imgSrc);
 
   const handleMouseDown = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -84,6 +80,7 @@ const Card: React.FC<CardProps> = ({
         left: card.position.x,
         top: card.position.y,
         cursor: isDragging ? "grabbing" : "grab",
+        background: card.color
       }}
     >
       <div className="card-icon">

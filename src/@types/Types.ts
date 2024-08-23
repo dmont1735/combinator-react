@@ -1,10 +1,11 @@
 export type ElementType = {
   name: string;
-  rank?: number;
+  rank: number;
 };
 
 export type CardType = {
   name: string;
+  color: string;
   position: { x: number; y: number };
 };
 

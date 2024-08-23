@@ -34,7 +34,7 @@ const Board = () => {
         if (newElement !== null) {
           cardContext.removeCard(cardA);
           cardContext.removeCard(card);
-          cardContext.addCard(newElement.name, cardA.position);
+          cardContext.addCard(newElement.name, newElement.rank, cardA.position);
         }
       }
     });

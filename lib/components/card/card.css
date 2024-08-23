@@ -2,7 +2,7 @@
     position: relative;
     width: 8.5vw;
     height: 5vh;
-    background: #530155;
+    opacity: 0.75;
     overflow: hidden;
     display: flex;
     align-items: center;

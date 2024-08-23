@@ -10,8 +10,9 @@ import { CardType } from "../@types/Types";
 export interface CardContextInterface {
   cards: CardType[];
   setCards: Dispatch<SetStateAction<CardType[]>>;
-  addCard: (name: string, position?: { x: number; y: number }) => void;
+  addCard: (name: string, rank: number, position?: { x: number; y: number }) => void;
   removeCard: (card: CardType) => void;
+  //getCardColor: (rank:number) => string;
 }
 
 export const CardContext = createContext<CardContextInterface | null>(null);
@@ -30,9 +31,23 @@ const getRandomPosition = () => {
 export default function CardProvider({ children }: CardProviderProps) {
   const [cards, setCards] = useState<CardType[]>([]);
 
-  const addCard = (name: string, position?: { x: number; y: number }) => {
+  const getCardColor = (rank:number)=>{
+    switch(rank){
+      case 0:
+        return "#91d0ed";
+      case 1:
+        return "#91edd4";
+      case 2:
+        return "#e3eb9d";
+      default:
+        return "#e6c9a3";
+    }
+  }
+
+  const addCard = (name: string, rank:number, position?: { x: number; y: number }) => {
     const newCard: CardType = {
       name: name,
+      color: getCardColor(rank),
       position: position !== undefined ? position : getRandomPosition(),
     };
     setCards((cards) => [...cards, newCard]);
