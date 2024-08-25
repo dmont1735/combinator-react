@@ -12,7 +12,6 @@ export interface CardContextInterface {
   setCards: Dispatch<SetStateAction<CardType[]>>;
   addCard: (name: string, rank: number, position?: { x: number; y: number }) => void;
   removeCard: (card: CardType) => void;
-  //getCardColor: (rank:number) => string;
 }
 
 export const CardContext = createContext<CardContextInterface | null>(null);

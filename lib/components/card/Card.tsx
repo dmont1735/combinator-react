@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { CardType } from "../../../src/@types/Types";
 import "./card.css";
 
@@ -7,6 +7,7 @@ export interface CardProps {
   setPosition: (newPosition: { x: number; y: number }) => void;
   checkCombination: () => void;
   removeCard: (card: CardType) => void;
+  boardRef: React.RefObject<HTMLDivElement>;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -14,12 +15,12 @@ const Card: React.FC<CardProps> = ({
   setPosition,
   checkCombination,
   removeCard,
+  boardRef,
 }) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-
+  const [isDragging, setIsDragging] = React.useState(false);
+  const dragOffset = React.useRef({ x: 0, y: 0 });
+  const cardRef = React.useRef<HTMLDivElement>(null);
   const imgSrc = new URL(`../../assets/${card.name}Badge.svg`, import.meta.url).href;
-  console.log(imgSrc);
 
   const handleMouseDown = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -27,10 +28,10 @@ const Card: React.FC<CardProps> = ({
     switch (event.button) {
       case 0:
         setIsDragging(true);
-        setDragOffset({
+        dragOffset.current = {
           x: event.clientX - card.position.x,
           y: event.clientY - card.position.y,
-        });
+        };
         break;
 
       case 1:
@@ -43,20 +44,43 @@ const Card: React.FC<CardProps> = ({
   };
 
   const handleMouseMove = (event: MouseEvent) => {
-    if (isDragging) {
-      setPosition({
-        x: event.clientX - dragOffset.x,
-        y: event.clientY - dragOffset.y,
-      });
+    if (isDragging && cardRef.current && boardRef.current) {
+      const boardRect = boardRef.current.getBoundingClientRect();
+      const cardRect = cardRef.current.getBoundingClientRect();
+
+      let newX = event.clientX - boardRect.left - cardRect.width / 2;
+      let newY = event.clientY - boardRect.top - cardRect.height / 2;
+
+      if (newX < 0) {
+        newX = 0;
+      }
+      if (newY < 0) {
+        newY = 0;
+      }
+      if (newX + cardRect.width > boardRect.width) {
+        newX = boardRect.width - cardRect.width;
+      }
+      if (newY + cardRect.height > boardRect.height) {
+        newY = boardRect.height - cardRect.height;
+      }
+
+      cardRef.current.style.left = `${newX}px`;
+      cardRef.current.style.top = `${newY}px`;
     }
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
-    checkCombination();
+
+    if (cardRef.current) {
+      const newX = parseInt(cardRef.current.style.left || "0");
+      const newY = parseInt(cardRef.current.style.top || "0");
+      setPosition({ x: newX, y: newY });
+      checkCombination();
+    }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (isDragging) {
       window.addEventListener("mousemove", handleMouseMove);
       window.addEventListener("mouseup", handleMouseUp);
@@ -73,6 +97,7 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div
+      ref={cardRef}
       onMouseDown={handleMouseDown}
       className="card"
       style={{
@@ -80,11 +105,11 @@ const Card: React.FC<CardProps> = ({
         left: card.position.x,
         top: card.position.y,
         cursor: isDragging ? "grabbing" : "grab",
-        background: card.color
+        background: card.color,
       }}
     >
       <div className="card-icon">
-        <img src={imgSrc}></img>
+        <img src={imgSrc} alt={`${card.name} icon`} />
       </div>
       <div className="card-name">{card.name}</div>
     </div>

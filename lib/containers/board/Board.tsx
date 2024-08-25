@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { CardContext } from "../../../src/context/CardContext";
 import { ElementContext } from "../../../src/context/ElementContext";
 import Card from "../../components/card/Card";
@@ -47,9 +47,11 @@ const Board = () => {
     });
   };
 
+  const ref = useRef<HTMLDivElement>(null);
+
   return (
-    <div className="board">
-      <button
+    <div className="board" ref={ref}>
+      <button      
         onClick={() => {
           onHandleResetData();
         }}
@@ -58,6 +60,7 @@ const Board = () => {
       </button>
       {cardContext.cards.map((card, index) => (
         <Card
+        boardRef={ref}
           card={card}
           checkCombination={() => {
             handleCheckCombination(card);
