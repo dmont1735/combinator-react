@@ -1,7 +1,7 @@
 import "./App.css";
 import Panel from "../lib/containers/panel/Panel";
 import Board from "../lib/containers/board/Board";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import CardProvider from "./context/CardContext";
 import ElementProvider from "./context/ElementContext";
 
@@ -20,12 +20,16 @@ const App: React.FC = () => {
     };
   }, []);
 
+  const boardRef = useRef<HTMLDivElement | null>(null);
+
   return (
     <div className="canvas">
       <ElementProvider>
         <CardProvider>
-          <Panel />
-          <Board />
+        <Panel boardRef={boardRef} />
+          <div ref={boardRef}>
+            <Board />
+          </div>          
         </CardProvider>
       </ElementProvider>
     </div>

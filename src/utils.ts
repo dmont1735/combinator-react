@@ -2,6 +2,10 @@ import { CardType } from "./@types/Types";
 import initialCombinations from "../lib/data/combinations.json";
 import initialElements from "../lib/data/elements.json";
 
+export function clamp(num: number, min: number, max: number) {
+  return num <= min ? min : num >= max ? max : num;
+}
+
 const vwToPx = (vw: number): number => {
   return (vw / 100) * window.innerWidth;
 };
@@ -10,7 +14,7 @@ const vhToPx = (vh: number): number => {
   return (vh / 100) * window.innerHeight;
 };
 
-const cardsSize: { width: number; height: number } = {
+export const cardsSize: { width: number; height: number } = {
   width: vwToPx(4.2),
   height: vhToPx(2),
 };

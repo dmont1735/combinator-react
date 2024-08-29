@@ -4,6 +4,7 @@ import { ElementContext } from "../../../src/context/ElementContext";
 import Card from "../../components/card/Card";
 import { areCardsColliding } from "../../../src/utils";
 import { CardType } from "../../../src/@types/Types";
+import "./board.css";
 
 const Board = () => {
   const cardContext = useContext(CardContext);
@@ -51,7 +52,7 @@ const Board = () => {
 
   return (
     <div className="board" ref={ref}>
-      <button      
+      <button
         onClick={() => {
           onHandleResetData();
         }}
@@ -60,7 +61,8 @@ const Board = () => {
       </button>
       {cardContext.cards.map((card, index) => (
         <Card
-        boardRef={ref}
+          key={"card" + index}
+          boardRef={ref}
           card={card}
           checkCombination={() => {
             handleCheckCombination(card);

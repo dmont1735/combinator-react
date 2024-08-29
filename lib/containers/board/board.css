@@ -19,9 +19,9 @@ body {
 
 .board {
   position: relative;
-  width: 1664px;
-  height: 1080px;
-  background: #ebcfbd;
+  width: 90vw;
+  height: 100vh;
+  background: #7a7a7a;
   overflow: hidden;
   flex-shrink: 0;
   align-self: start;

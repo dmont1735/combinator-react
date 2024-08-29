@@ -33,13 +33,3 @@ body {
   flex-wrap: nowrap;
   flex-grow: 1;
 }
-
-.board {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  background: #7a7a7a;
-  overflow: hidden;
-  flex-shrink: 0;
-  align-self: start;
-}

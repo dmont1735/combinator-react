@@ -3,8 +3,13 @@ import Element from "../../components/element/Element";
 import "./panel.css";
 import { CardContext } from "../../../src/context/CardContext";
 import { ElementContext } from "../../../src/context/ElementContext";
+import { cardsSize } from "../../../src/utils";
 
-const Panel = () => {
+export interface PanelProps {
+  boardRef: React.RefObject<HTMLDivElement>;
+}
+
+const Panel: React.FC<PanelProps> = ({ boardRef }) => {
   const cardContext = useContext(CardContext);
   const elementContext = useContext(ElementContext);
 
@@ -14,10 +19,30 @@ const Panel = () => {
     );
   }
 
+  const handleAddCard = (name: string, rank: number) => {
+    let pos={x:0,y:0};
+
+    if (boardRef.current) {
+      const boardRect = boardRef.current.getBoundingClientRect();
+
+      pos= {
+        x: Math.random() * (boardRect.width - cardsSize.width*2),
+        y: Math.random() * (boardRect.height - cardsSize.height*2),
+      };
+    }
+
+    cardContext.addCard(name, rank, pos);
+  };
+
   return (
     <div className="panel">
-      {elementContext.elements.map((element) => (
-        <Element name={element.name} rank={element.rank} onAddCard={cardContext.addCard}></Element>
+      {elementContext.elements.map((element, index) => (
+        <Element
+        key={"element"+index}
+          name={element.name}
+          rank={element.rank}
+          onAddCard={handleAddCard}
+        ></Element>
       ))}
     </div>
   );

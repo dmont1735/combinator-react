@@ -47,27 +47,35 @@ const Card: React.FC<CardProps> = ({
     if (isDragging && cardRef.current && boardRef.current) {
       const boardRect = boardRef.current.getBoundingClientRect();
       const cardRect = cardRef.current.getBoundingClientRect();
+      
+      let mouseX = event.clientX - boardRect.left;
+      let mouseY = event.clientY - boardRect.top;
+      
+      let newX = mouseX - cardRect.width / 2;
+      let newY = mouseY - cardRect.height / 2;
+      
+      const minX = 0;
+      const minY = 0;
+      const maxX = boardRect.width - cardRect.width;
+      const maxY = boardRect.height - cardRect.height;
 
-      let newX = event.clientX - boardRect.left - cardRect.width / 2;
-      let newY = event.clientY - boardRect.top - cardRect.height / 2;
-
-      if (newX < 0) {
-        newX = 0;
+      if (newX < minX) {
+        newX = minX;
+      } else if (newX > maxX) {
+        newX = maxX;
       }
-      if (newY < 0) {
-        newY = 0;
+  
+      if (newY < minY) {
+        newY = minY;
+      } else if (newY > maxY) {
+        newY = maxY;
       }
-      if (newX + cardRect.width > boardRect.width) {
-        newX = boardRect.width - cardRect.width;
-      }
-      if (newY + cardRect.height > boardRect.height) {
-        newY = boardRect.height - cardRect.height;
-      }
-
+  
       cardRef.current.style.left = `${newX}px`;
       cardRef.current.style.top = `${newY}px`;
     }
   };
+  
 
   const handleMouseUp = () => {
     setIsDragging(false);
